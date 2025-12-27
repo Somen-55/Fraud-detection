@@ -1,0 +1,8 @@
+Real-Time Fraud Detection Dashboard
+
+This project is a real-time web dashboard designed to monitor e-commerce transactions and detect suspicious activity using AI-based anomaly detection. It simulates a live transaction stream and assigns fraud risk scores, while storing historical transaction data in MongoDB for trend analysis. The dashboard features a live-updating transaction table, a risk score chart, and alerts for high-risk transactions, providing a comprehensive overview of transactional activity.
+
+The application is built with React.js and Redux on the frontend, along with Chart.js for visualizing risk trends. The backend uses Node.js, Express.js, and Socket.io to handle REST and WebSocket communication, while JWT authentication secures all endpoints. AI-based fraud detection can be integrated using the OpenAI API, though simulated risk scoring is also supported to demonstrate functionality without API calls.
+
+To set up the project, first clone the repository and install dependencies for both backend and frontend. In the backend/ folder, create a .env file with your PORT, MONGO_URI, optional OPENAI_API_KEY, and JWT_SECRET, then start the server using node server.js. For the frontend, navigate to the frontend/ folder, run npm install, and start the development server with npm start. The dashboard will then be accessible at http://localhost:3000
+, showing live transaction updates, risk charts, and alerts.
