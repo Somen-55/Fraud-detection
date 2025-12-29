@@ -6,7 +6,7 @@ const TransactionSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   riskScore: Number,
   riskLevel: String,
-  reason: String
+  reasons: [String] 
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);

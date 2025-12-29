@@ -1,45 +1,62 @@
+/**
+ * Clean, Stateless AI Risk Engine
+ * lastState holds previous transaction info per user
+ */
+function calculateRisk(transaction, lastState = null) {
+  let riskScore = 0;
+  const reasons = [];
 
-require('dotenv').config();
-
-const OpenAI = require('openai');
-
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-async function calculateRisk(transaction) {
-  try {
-    const prompt = `
-You are a fraud detection system.
-Analyze the transaction and return ONLY a number between 0 and 100.
-
-Transaction:
-User ID: ${transaction.userId}
-Amount: ${transaction.amount}
-Time: ${transaction.timestamp}
-
-Rules:
-- High amount → higher risk
-- Unusual behavior → higher risk
-- Normal activity → lower risk
-
-Return only the number.
-`;
-
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.2
-    });
-
-    const score = parseInt(response.choices[0].message.content.trim());
-    return isNaN(score) ? 50 : score;
-
-  } catch (error) {
-    console.error('❌ OpenAI Error:', error.message);
-    return 50; // fallback score if AI fails
+  // =========================
+  // AMOUNT ANALYSIS
+  // =========================
+  if (transaction.amount >= 1800) {
+    riskScore += 60;
+    reasons.push('Very High Spending');
+  } else if (transaction.amount >= 1000) {
+    riskScore += 30;
+    reasons.push('High Spending');
   }
+
+  // =========================
+  // BEHAVIOR ANALYSIS
+  // =========================
+  if (lastState) {
+    // Geo change
+    if (lastState.location && lastState.location !== transaction.location) {
+      riskScore += 30;
+      reasons.push('Geo-Anomaly');
+    }
+
+    // Device change
+    if (lastState.device && lastState.device !== transaction.device) {
+      riskScore += 20;
+      reasons.push('New Device');
+    }
+
+    // Rapid Velocity: 40 sec – 2 min window
+    if (lastState.lastTimestamp) {
+      const diffSeconds = (new Date(transaction.timestamp) - new Date(lastState.lastTimestamp)) / 1000;
+      if (diffSeconds > 0 && diffSeconds <= 120) { // 2 min = 120 sec
+        riskScore += 25;
+        reasons.push('Rapid Velocity');
+      }
+    }
+  }
+
+  // =========================
+  // NORMALIZATION
+  // =========================
+  riskScore = Math.min(riskScore, 100);
+
+  let riskLevel = 'LOW';
+  if (riskScore >= 75) riskLevel = 'HIGH';
+  else if (riskScore >= 40) riskLevel = 'MEDIUM';
+
+  return {
+    riskScore,
+    riskLevel,
+    reason: reasons.length ? reasons.join(' • ') : 'Normal Behavior'
+  };
 }
 
 module.exports = calculateRisk;

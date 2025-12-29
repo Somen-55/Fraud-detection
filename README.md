@@ -1,8 +1,129 @@
-Real-Time Fraud Detection Dashboard
 
-This project is a real-time web dashboard designed to monitor e-commerce transactions and detect suspicious activity using AI-based anomaly detection. It simulates a live transaction stream and assigns fraud risk scores, while storing historical transaction data in MongoDB for trend analysis. The dashboard features a live-updating transaction table, a risk score chart, and alerts for high-risk transactions, providing a comprehensive overview of transactional activity.
+# 📊 Real-Time Fraud Detection Dashboard
 
-The application is built with React.js and Redux on the frontend, along with Chart.js for visualizing risk trends. The backend uses Node.js, Express.js, and Socket.io to handle REST and WebSocket communication, while JWT authentication secures all endpoints. AI-based fraud detection can be integrated using the OpenAI API, though simulated risk scoring is also supported to demonstrate functionality without API calls.
+A real-time web dashboard for monitoring e-commerce transactions and detecting suspicious activity using a rule-based fraud detection engine.
+The system is designed to be **AI-ready** and simulates real-world fraud scenarios using realistic dummy data.
 
-To set up the project, first clone the repository and install dependencies for both backend and frontend. In the backend/ folder, create a .env file with your PORT, MONGO_URI, optional OPENAI_API_KEY, and JWT_SECRET, then start the server using node server.js. For the frontend, navigate to the frontend/ folder, run npm install, and start the development server with npm start. The dashboard will then be accessible at http://localhost:3000
-, showing live transaction updates, risk charts, and alerts.
+---
+
+## 🚀 Features
+
+* Real-time transaction updates using **Socket.io**
+* Live fraud risk scoring (0–100)
+* Fraud reason generation (High Spending, Geo-Anomaly, New Device, etc.)
+* Alerts for high-risk transactions
+* Fully functional without external AI APIs
+
+---
+
+## 🧠 Fraud Detection Logic
+
+The fraud detection system uses a **rule-based scoring engine** similar to what is used in real financial systems.
+
+### Risk factors considered:
+
+* Transaction amount
+* Sudden location change (Geo-Anomaly)
+* New device usage
+* Unusual behavior patterns
+
+Each factor contributes to a final **risk score between 0 and 100**, along with a clear explanation for the score.
+
+---
+
+## 🤖 OpenAI Integration (Optional)
+
+This project is **OpenAI-ready**, but does not require an OpenAI API key to run.
+
+* Due to API access limitations, **dummy data and rule-based logic** are used to simulate AI behavior
+* The architecture allows easy integration of OpenAI or other LLMs in the future
+* This approach ensures explainability, reliability, and cost efficiency
+
+---
+
+## 🧪 Dummy Data Simulation
+
+The system generates realistic dummy transactions to simulate:
+
+* Normal user activity
+* High-value transactions
+* Cross-location usage
+* Device changes
+
+This allows full demonstration of fraud detection without relying on live payment data or paid APIs.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+
+* React.js
+* Socket.io Client
+* Chart.js
+
+**Backend**
+
+* Node.js
+* Express.js
+* MongoDB
+* Socket.io
+* JWT (optional / ready)
+
+---
+
+## ⚙️ Setup Instructions
+
+### Backend
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the backend folder:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+```
+
+> `OPENAI_API_KEY` is optional and not required to run this project.
+
+---
+
+## ✅ Assignment Coverage
+
+* Real-time data streaming
+* Fraud risk scoring
+* Alert system
+* Scalable backend architecture
+* AI-ready design
+* Clear and explainable logic
+
+---
+
+## 👨‍💻 Author
+
+**Somen Sarangi**
+
+---
+
+### 💡 Note for Reviewers
+
+This project demonstrates how real-world fraud systems work by combining deterministic rule engines with optional AI integration.
+The absence of a live OpenAI key does not affect functionality or evaluation.
+

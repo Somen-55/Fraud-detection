@@ -1,0 +1,91 @@
+:root {
+  --bg: #0b0f1a;
+  --card-bg: #161b2c;
+  --border: rgba(255, 255, 255, 0.08);
+  --primary: #6366f1;
+  --danger: #ff4d4d;
+  --success: #00e676;
+  --warning: #ffb74d;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 40px;
+  margin: 0;
+}
+
+/* Dashboard Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Common Card Style */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Alerts */
+.alert-item {
+  background: rgba(255, 77, 77, 0.05);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Table Design */
+.table-wrapper { width: 100%; overflow-x: auto; }
+.fraud-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.fraud-table th { text-align: left; padding: 16px; color: var(--text-secondary); border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+.fraud-table td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.fraud-table tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+/* Badges */
+.badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.badge-High { background: rgba(255, 77, 77, 0.15); color: var(--danger); }
+.badge-Medium { background: rgba(255, 183, 77, 0.15); color: var(--warning); }
+.badge-Low { background: rgba(0, 230, 118, 0.15); color: var(--success); }
+/* Add this to your existing CSS */
+.ai-reason {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.reason-column {
+  max-width: 200px;
+  color: var(--text-secondary);
+  font-size: 0.8rem !important;
+}

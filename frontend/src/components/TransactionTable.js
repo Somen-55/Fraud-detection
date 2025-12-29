@@ -1,46 +1,70 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import '../styles/dashboard.css';
+
+const getRiskColor = (score) => {
+  if (score >= 70) return '#ef4444';   // red
+  if (score >= 40) return '#facc15';   // yellow
+  return '#22c55e';                    // green
+};
 
 export default function TransactionTable() {
   const transactions = useSelector(state => state.transactions);
 
   return (
-    <table
-      border="1"
-      cellPadding="10"
-      style={{ width: '100%', borderCollapse: 'collapse' }}
-    >
-      <thead style={{ background: '#f2f2f2' }}>
-        <tr>
-          <th>User</th>
-          <th>Amount</th>
-          <th>Timestamp</th>
-          <th>Risk Score</th>
-          <th>Risk Level</th>
-          <th>AI Reason</th>
-        </tr>
-      </thead>
+    <div className="card table-section">
+      <h3>Live Transaction Ledger</h3>
 
-      <tbody>
-        {transactions.map((t, i) => {
-          let rowColor = '#ffffff';
-          if (t.riskLevel === 'High') rowColor = '#ffcccc';
-          else if (t.riskLevel === 'Medium') rowColor = '#fff3cd';
-
-          return (
-            <tr key={i} style={{ background: rowColor }}>
-              <td>{t.userId}</td>
-              <td>₹{t.amount}</td>
-              <td>{new Date(t.timestamp).toLocaleTimeString()}</td>
-              <td>{t.riskScore}</td>
-              <td>
-                <strong>{t.riskLevel}</strong>
-              </td>
-              <td>{t.reason}</td>
+      <div className="table-wrapper">
+        <table className="fraud-table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Amount</th>
+              <th>Time</th>
+              <th>Risk</th>
+              <th>AI Analysis Reason</th>
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          </thead>
+
+          <tbody>
+            {[...transactions].reverse().map((t, i) => (
+              <tr key={i}>
+                <td style={{ fontWeight: 600 }}>{t.userId}</td>
+
+                <td>₹{t.amount.toLocaleString()}</td>
+
+                <td style={{ color: '#94a3b8' }}>
+  {new Date(t.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+</td>
+
+                {/* ✅ CLEAN RISK INDICATOR */}
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: '50%',
+                        backgroundColor: getRiskColor(t.riskScore),
+                        display: 'inline-block'
+                      }}
+                    />
+                    <span style={{ fontSize: 13, color: '#cbd5f5' }}>
+                      {t.riskScore}
+                    </span>
+                  </div>
+                </td>
+
+                {/* ✅ CLEAN REASON */}
+                <td className="reason-column">
+                  {t.reason || 'Normal Behavior'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
