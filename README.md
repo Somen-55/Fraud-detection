@@ -79,7 +79,7 @@ This allows full demonstration of fraud detection without relying on live paymen
 ```bash
 cd backend
 npm install
-npm start
+node server.js
 ```
 
 ### Frontend
